@@ -151,7 +151,7 @@ function App() {
 
 .env.example
 ```
-SESSION_DOMAIN=localhost:3000
+SESSION_DOMAIN=localhost
 ```
 
 コピー
