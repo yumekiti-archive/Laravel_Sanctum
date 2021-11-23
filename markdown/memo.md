@@ -101,3 +101,103 @@ export default App;
 npm run start
 ```
 <img src="./images/react_test.png" style="height: 150px;" />
+
+# sanctum
+> 公式通りに進めていく
+
+## sanctumインストール
+```
+composer require laravel/sanctum
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+php artisan migrate
+```
+
+app/Http/Kernel.php
+```
+'api' => [
+    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+    'throttle:api',
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+],
+```
+
+## SPA認証
+
+### CORS設定
+> アプリケーションのCORS設定が、値がTrueのAccess-Control-Allow-Credentialsヘッダを返しているか確認する必要があります。これは、アプリケーションのconfig/cors.php設定ファイル内のsupports_credentialsオプションをtrueに設定することで実現できます。
+
+config/cors.php
+```
+'supports_credentials' => true
+```
+
+### withCredentials
+> さらに、アプリケーションのグローバルなaxiosインスタンスでwithCredentialsオプションを有効にする必要があります。通常、これはresources/js/bootstrap.jsファイルで実行する必要があります。フロントエンドからHTTPリクエストを行うためにAxiosを使用していない場合は、独自のHTTPクライアントで同等の構成を実行する必要があります。
+
+```
+npm install axios --save
+```
+
+```
+import Axios from 'axios';
+
+function App() {
+
+  let client = Axios.create({ withCredentials: true });
+```
+
+### セッションクッキードメイン設定
+> 最後に、アプリケーションのセッションクッキードメイン設定で、ルートドメインのサブドメインを確実にサポートしてください。これを実現するには、アプリケーションのconfig/session.php設定ファイル内でドメインの先頭に.を付けます。
+
+.env.example
+```
+SESSION_DOMAIN=localhost:3000
+```
+
+コピー
+```
+cp .env.example .env
+```
+
+# 認証
+## CSRF保護
+```
+axios.get('/sanctum/csrf-cookie').then(response => {
+    // ログイン…
+});
+```
+
+## 適当にuser生やす
+```
+php artisan make:seeder UserSeeder
+```
+
+database/seeders/UserSeeder.php
+```
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+User::factory()->create([
+    'name' => 'test1',
+    'email' => 'test1@test.jp',
+    'password' => bcrypt('testtest')
+]);
+DB::table('users')->insert([
+    'name' => 'test2',
+    'email' => 'test2@test.jp',
+    'password' => Hash::make('password')
+]);
+User::factory()->count(3)->create();
+```
+
+database/seeders/DatabaseSeeder.php
+```
+$this->call(UserSeeder::class);
+```
+
+```
+php artisan migrate:fresh --seed
+```
+
+## login処理適当に書く
