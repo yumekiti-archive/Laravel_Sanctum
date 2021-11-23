@@ -201,3 +201,36 @@ php artisan migrate:fresh --seed
 ```
 
 ## login処理適当に書く
+routes/api.php
+```
+Route::post('/login', [UserController::class, 'login']);
+Route::get('/user', [UserController::class, 'index']);
+
+Route::get('/', function () {
+    return 'Hello World';
+});
+```
+
+```
+php artisan make:controller UserController --api
+```
+
+app/Http/Controllers/UserController.php
+```
+use Illuminate\Support\Facades\Auth;
+
+public function index()
+{
+    //
+    return Auth::user();
+}
+
+public function login(Request $request)
+{
+    if (Auth::attempt($request->all())) {
+        return Auth::user();
+    }
+}
+```
+
+## loginしてみる
