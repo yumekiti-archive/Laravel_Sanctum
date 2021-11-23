@@ -203,6 +203,8 @@ php artisan migrate:fresh --seed
 ## login処理適当に書く
 routes/api.php
 ```
+use App\Http\Controllers\UserController;
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
