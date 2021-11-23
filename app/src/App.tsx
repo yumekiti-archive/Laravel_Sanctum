@@ -7,6 +7,7 @@ function App() {
   
   const login = () => {
     console.log('login!!');
+    client.get('http://localhost:8000/api');
   }
   const get = () => {
     console.log('get!!!!!!');
