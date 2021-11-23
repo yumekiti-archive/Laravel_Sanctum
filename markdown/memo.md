@@ -1,6 +1,7 @@
 # docker禁止laravel
 > mysqlは許す。
 
+# laravel
 ## phpインストール
 ```
 sudo add-apt-repository ppa:ondrej/php
@@ -66,3 +67,37 @@ php artisan key:generate
 <img src="./images/serve.png" style="height: 150px;" />
 起動ヨシ！
 
+# react
+## reactインストール
+```
+npx create-react-app app --template typescript
+```
+
+## login処理用の画面作成
+src/App.tsx
+```
+import React from 'react';
+
+function App() {
+  const login = () => {
+    console.log('login!!');
+  }
+  const get = () => {
+    console.log('get!!!!!!');
+  }
+  return (
+    <div className="App">
+      <button onClick={() => login()}>login</button>
+      <button onClick={() => get()}>get</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+## 起動してみる
+```
+npm run start
+```
+<img src="./images/react_test.png" style="height: 150px;" />
