@@ -62,4 +62,11 @@ class UserController extends Controller
     {
         //
     }
+
+    public function login(Request $request)
+    {
+        if (Auth::attempt($request->all())) {
+            return Auth::user();
+        }
+    }
 }

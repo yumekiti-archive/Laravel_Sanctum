@@ -203,8 +203,12 @@ php artisan migrate:fresh --seed
 ## login処理適当に書く
 routes/api.php
 ```
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
 Route::post('/login', [UserController::class, 'login']);
-Route::get('/user', [UserController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'index']);
 
 Route::get('/', function () {
     return 'Hello World';
