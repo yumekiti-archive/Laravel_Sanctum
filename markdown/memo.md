@@ -138,14 +138,6 @@ config/cors.php
 npm install axios --save
 ```
 
-```
-import Axios from 'axios';
-
-function App() {
-
-  let client = Axios.create({ withCredentials: true });
-```
-
 ### セッションクッキードメイン設定
 > 最後に、アプリケーションのセッションクッキードメイン設定で、ルートドメインのサブドメインを確実にサポートしてください。これを実現するには、アプリケーションのconfig/session.php設定ファイル内でドメインの先頭に.を付けます。
 
