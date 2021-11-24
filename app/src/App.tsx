@@ -1,13 +1,20 @@
 import React from 'react';
-import Axios from 'axios';
+import { getTest } from "./libs/test";
 
 function App() {
 
-  let client = Axios.create({ withCredentials: true });
-  
-  const login = () => {
-    console.log('login!!');
-    client.get('http://localhost:8000/api');
+  const login = async () => {
+    try {
+      const res = await getTest()
+
+      if (res?.status === 200) {
+        console.log(res);
+      } else {
+        console.log(res.data.message)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
   const get = () => {
     console.log('get!!!!!!');
