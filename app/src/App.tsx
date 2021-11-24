@@ -1,20 +1,10 @@
 import React from 'react';
-import { getTest } from "./libs/test";
+import Axios from 'axios';
 
 function App() {
 
   const login = async () => {
-    try {
-      const res = await getTest()
-
-      if (res?.status === 200) {
-        console.log(res);
-      } else {
-        console.log(res.data.message)
-      }
-    } catch (err) {
-      console.log(err)
-    }
+    Axios.get('http://localhost:8000/api');
   }
   const get = () => {
     console.log('get!!!!!!');

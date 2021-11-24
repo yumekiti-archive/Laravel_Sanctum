@@ -240,7 +240,39 @@ public function login(Request $request)
 ```
 
 ## getしてみる
-client.get('http://localhost:8000/api');
+axios.get('http://localhost:8000/api');
 > Access to XMLHttpRequest at 'http://localhost:8000/api' from origin 'http://localhost:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
 ひぇ。。。
+
+## ってことで、Cors対策
+```
+php artisan make:middleware Cors
+```
+
+app\Http\Middleware/Cors.php
+```
+return $next($request)
+->header('Access-Control-Allow-Origin', '*')
+->header('Access-Control-Allow-Methods', '*')
+->header('Access-Control-Allow-Headers', '*');
+```
+> 全許容なので本番運用時は注意
+
+app/Http/Kernel.php
+```
+'api' => [
+    \App\Http\Middleware\Cors::class,
+```
+
+## もう一度get!!
+```
+{data: 'Hello World', status: 200, statusText: 'OK', headers: {…}, config: {…}, …}config: {transitional: {…}, transformRequest: Array(1), transformResponse: Array(1), timeout: 0, adapter: ƒ, …}data: "Hello World"headers: {cache-control: 'no-cache, private', content-type: 'text/html; charset=UTF-8'}request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}status: 200statusText: "OK"[[Prototype]]: Object
+```
+
+やったー!!
+
+## フロント側のlogin処理を書く
+```
+
+```
